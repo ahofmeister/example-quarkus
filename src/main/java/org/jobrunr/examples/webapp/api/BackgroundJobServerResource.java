@@ -14,26 +14,28 @@ import javax.ws.rs.core.MediaType;
 @ApplicationScoped
 public class BackgroundJobServerResource {
 
-    @Inject
-    BackgroundJobServer backgroundJobServer;
-    @Inject
-    JobRunrDashboardWebServer dashboard;
+  @Inject
+  BackgroundJobServer backgroundJobServer;
 
-    @GET
-    @Path("/start")
-    @Produces(MediaType.APPLICATION_JSON)
-    public SimpleResponse start() {
-        backgroundJobServer.start();
-        return new SimpleResponse("JobServer started");
-    }
+  @Inject
+  JobRunrDashboardWebServer dashboard;
 
-    @GET
-    @Path("/stop")
-    @Produces(MediaType.APPLICATION_JSON)
-    public SimpleResponse stop() {
-        backgroundJobServer.stop();
+  @GET
+  @Path("/start")
+  @Produces(MediaType.APPLICATION_JSON)
+  public SimpleResponse start() {
+    System.out.println(backgroundJobServer.isRunning());
+    backgroundJobServer.start();
+    //    dashboard.stop();
+    return new SimpleResponse("JobServer started");
+  }
 
-        return new SimpleResponse("JobServer stopped");
-    }
+  @GET
+  @Path("/stop")
+  @Produces(MediaType.APPLICATION_JSON)
+  public SimpleResponse stop() {
+    backgroundJobServer.stop();
+    return new SimpleResponse("JobServer stopped");
+  }
 
 }
