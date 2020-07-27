@@ -2,6 +2,7 @@ package org.jobrunr.examples.services;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import java.time.Instant;
+import javax.enterprise.context.control.ActivateRequestContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import org.jobrunr.jobs.context.JobContext;
@@ -11,12 +12,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.transaction.Transactional;
 
 /**
  * This is a simple service
  */
 @ApplicationScoped
 @RegisterForReflection
+@ActivateRequestContext
 public class MyService implements MyServiceInterface {
 
   @Inject
@@ -56,6 +59,7 @@ public class MyService implements MyServiceInterface {
     }
   }
 
+  @Transactional
   public void add(Instant date, String id) {
     Food food = new Food();
     food.name = "banana";
